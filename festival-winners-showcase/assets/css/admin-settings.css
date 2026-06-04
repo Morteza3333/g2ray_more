@@ -1,0 +1,106 @@
+.fws-settings-wrap {
+    max-width: 900px;
+    margin: 30px auto 0;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.fws-settings-header {
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+}
+
+.fws-settings-header h1 {
+    font-size: 24px;
+    color: #1d2327;
+    font-weight: 700;
+}
+
+.fws-settings-header p {
+    color: #50575e;
+    font-size: 16px;
+}
+
+.fws-settings-main .form-table {
+    margin-top: 0;
+}
+
+.fws-settings-main .form-table th {
+    font-weight: 600;
+    color: #1d2327;
+    vertical-align: middle;
+}
+
+.fws-settings-main .form-table td {
+    padding: 15px 10px;
+}
+
+.fws-color-picker {
+    height: 40px !important;
+}
+
+.fws-settings-main input[type="submit"] {
+    background: #2271b1;
+    border: none;
+    padding: 12px 40px;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(34, 113, 177, 0.3);
+    transition: all 0.2s;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.fws-settings-main input[type="submit"]:hover {
+    background: #135e96;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(34, 113, 177, 0.4);
+}
+
+.fws-settings-guide {
+    margin-top: 50px;
+    background: #f8fbff;
+    padding: 30px;
+    border-right: 5px solid #2271b1;
+    border-radius: 12px;
+}
+
+.fws-settings-guide h2 {
+    margin-top: 0;
+    color: #2271b1;
+    font-size: 20px;
+}
+
+.fws-settings-guide ul {
+    list-style: none;
+    padding: 0;
+}
+
+.fws-settings-guide li {
+    position: relative;
+    padding-right: 25px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.fws-settings-guide li:before {
+    content: "✓";
+    position: absolute;
+    right: 0;
+    color: #2271b1;
+    font-weight: bold;
+}
+
+.rtl .fws-settings-wrap {
+    direction: rtl;
+}
+
+.rtl .fws-settings-guide {
+    border-right: 5px solid #2271b1;
+    border-left: none;
+}

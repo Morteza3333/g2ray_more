@@ -1,0 +1,231 @@
+.fws-container.rtl {
+    direction: rtl;
+}
+
+.fws-modal.rtl {
+    direction: rtl;
+}
+
+.fws-container {
+    width: 100%;
+    margin: 40px 0;
+    background: var(--fws-bg);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.fws-winner-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    display: block;
+    cursor: pointer;
+}
+
+.fws-winner-card img {
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fws-winner-card:hover img {
+    transform: scale(1.05);
+}
+
+.fws-card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.fws-winner-card:hover .fws-card-overlay {
+    opacity: 1;
+}
+
+.fws-card-rank {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--fws-accent);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.rtl .fws-card-rank {
+    right: 15px;
+    left: auto;
+}
+
+.fws-card-info h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.fws-card-info p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* Modal Styling */
+.fws-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.fws-modal.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+body.fws-modal-open {
+    overflow: hidden;
+}
+
+.fws-modal-close {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.rtl .fws-modal-close {
+    left: 30px;
+    right: auto;
+}
+
+.fws-modal-content {
+    width: 90%;
+    max-width: 1400px;
+    height: 85vh;
+    background: #111;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.fws-modal-body {
+    display: flex;
+    height: 100%;
+}
+
+.fws-slider-container {
+    flex: 1;
+    background: #000;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fws-info-panel {
+    width: 350px;
+    background: #1a1a1a;
+    padding: 40px;
+    color: #fff;
+    border-left: 1px solid #333;
+    overflow-y: auto;
+}
+
+.rtl .fws-info-panel {
+    border-left: none;
+    border-right: 1px solid #333;
+}
+
+.fws-swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.fws-swiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fws-swiper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.fws-rank-badge {
+    display: inline-block;
+    background: var(--fws-accent);
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.fws-info-header h2 {
+    margin: 0;
+    color: var(--fws-primary);
+}
+
+.fws-info-photographer, .fws-info-instagram {
+    margin-top: 30px;
+}
+
+.fws-info-panel .label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.fws-info-panel .value {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.fws-info-instagram a {
+    color: var(--fws-primary);
+    text-decoration: none;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: #fff;
+}
+
+@media (max-width: 1024px) {
+    .fws-modal-body {
+        flex-direction: column;
+    }
+    .fws-info-panel {
+        width: 100%;
+        height: auto;
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid #333;
+    }
+    .fws-modal-content {
+        height: 95vh;
+    }
+}
