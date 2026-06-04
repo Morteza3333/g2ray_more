@@ -1,0 +1,6 @@
+#fws-gallery-list li {
+    cursor: move;
+}
+.fws-remove-image:hover {
+    background: #cc0000 !important;
+}
