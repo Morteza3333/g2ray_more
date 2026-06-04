@@ -1,0 +1,215 @@
+:root {
+    --fws-primary: #1a1a1a;
+    --fws-accent: #c5a059;
+    --fws-text: #ffffff;
+    --fws-bg: #1a1a1a;
+    --fws-gap: 30px;
+}
+
+.fws-theme-light {
+    --fws-text: #1a1a1a;
+    --fws-bg: #ffffff;
+}
+
+.fws-gallery-wrapper {
+    background-color: var(--fws-bg);
+    padding: 60px 20px;
+    color: var(--fws-text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.fws-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--fws-gap);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.fws-item {
+    opacity: 0; /* Hidden initially for GSAP */
+    transform: translateY(30px);
+}
+
+.fws-item-inner {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+.fws-theme-light .fws-item-inner {
+    background: rgba(0, 0, 0, 0.03);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.fws-item-inner:hover {
+    transform: scale(1.02);
+}
+
+.fws-image-container {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+}
+
+.fws-main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.fws-item-inner:hover .fws-main-img {
+    transform: scale(1.1);
+}
+
+.fws-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.fws-item-inner:hover .fws-overlay {
+    opacity: 1;
+}
+
+.fws-zoom-icon {
+    font-size: 40px;
+    color: #fff;
+    transform: scale(0.5);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fws-item-inner:hover .fws-zoom-icon {
+    transform: scale(1);
+}
+
+.fws-info {
+    padding: 25px;
+    text-align: right;
+}
+
+.fws-rank-badge {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.fws-winner-title {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--fws-accent);
+}
+
+.fws-photographer {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+.fws-instagram {
+    display: inline-block;
+    color: var(--fws-accent);
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.fws-instagram:hover {
+    border-color: var(--fws-accent);
+}
+
+/* Lightbox Styles */
+.fws-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.fws-lightbox-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.fws-lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10;
+    line-height: 1;
+    transition: transform 0.3s;
+}
+
+.fws-lightbox-close:hover {
+    transform: rotate(90deg);
+}
+
+.fws-swiper {
+    width: 90%;
+    height: 80%;
+}
+
+.fws-swiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fws-swiper .swiper-slide img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.fws-swiper .swiper-button-next,
+.fws-swiper .swiper-button-prev {
+    color: var(--fws-accent);
+}
+
+.fws-swiper .swiper-pagination-bullet-active {
+    background: var(--fws-accent);
+}
+
+body.fws-no-scroll {
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .fws-grid {
+        grid-template-columns: 1fr;
+    }
+    .fws-gallery-wrapper {
+        padding: 40px 15px;
+    }
+    .fws-swiper {
+        width: 95%;
+        height: 70%;
+    }
+}
