@@ -1,3 +1,11 @@
+.fws-container.rtl {
+    direction: rtl;
+}
+
+.fws-modal.rtl {
+    direction: rtl;
+}
+
 .fws-container {
     width: 100%;
     margin: 40px 0;
@@ -44,13 +52,18 @@
 .fws-card-rank {
     position: absolute;
     top: 15px;
-    left: 15px;
+    right: 15px;
     background: var(--fws-accent);
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 4px;
     font-weight: bold;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.rtl .fws-card-rank {
+    right: 15px;
+    left: auto;
 }
 
 .fws-card-info h3 {
@@ -94,11 +107,16 @@ body.fws-modal-open {
 .fws-modal-close {
     position: absolute;
     top: 20px;
-    right: 30px;
+    left: 30px;
     font-size: 40px;
     color: #fff;
     cursor: pointer;
     z-index: 100;
+}
+
+.rtl .fws-modal-close {
+    left: 30px;
+    right: auto;
 }
 
 .fws-modal-content {
@@ -132,6 +150,11 @@ body.fws-modal-open {
     color: #fff;
     border-left: 1px solid #333;
     overflow-y: auto;
+}
+
+.rtl .fws-info-panel {
+    border-left: none;
+    border-right: 1px solid #333;
 }
 
 .fws-swiper {
@@ -199,6 +222,7 @@ body.fws-modal-open {
         width: 100%;
         height: auto;
         border-left: none;
+        border-right: none;
         border-top: 1px solid #333;
     }
     .fws-modal-content {

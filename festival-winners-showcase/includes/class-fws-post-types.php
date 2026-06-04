@@ -13,19 +13,19 @@ class FWS_Post_Types {
 
 	public static function register_post_types() {
 		$labels = array(
-			'name'               => _x( 'Winners', 'post type general name', 'festival-winners-showcase' ),
-			'singular_name'      => _x( 'Winner', 'post type singular name', 'festival-winners-showcase' ),
-			'menu_name'          => _x( 'Festival Winners', 'admin menu', 'festival-winners-showcase' ),
-			'name_admin_bar'     => _x( 'Winner', 'add new on admin bar', 'festival-winners-showcase' ),
-			'add_new'            => _x( 'Add New', 'winner', 'festival-winners-showcase' ),
-			'add_new_item'       => __( 'Add New Winner', 'festival-winners-showcase' ),
-			'new_item'           => __( 'New Winner', 'festival-winners-showcase' ),
-			'edit_item'          => __( 'Edit Winner', 'festival-winners-showcase' ),
-			'view_item'          => __( 'View Winner', 'festival-winners-showcase' ),
-			'all_items'          => __( 'All Winners', 'festival-winners-showcase' ),
-			'search_items'       => __( 'Search Winners', 'festival-winners-showcase' ),
-			'not_found'          => __( 'No winners found.', 'festival-winners-showcase' ),
-			'not_found_in_trash' => __( 'No winners found in Trash.', 'festival-winners-showcase' )
+			'name'               => _x( 'برندگان', 'post type general name', 'festival-winners-showcase' ),
+			'singular_name'      => _x( 'برنده', 'post type singular name', 'festival-winners-showcase' ),
+			'menu_name'          => _x( 'برندگان جشنواره', 'admin menu', 'festival-winners-showcase' ),
+			'name_admin_bar'     => _x( 'برنده', 'add new on admin bar', 'festival-winners-showcase' ),
+			'add_new'            => _x( 'افزودن جدید', 'winner', 'festival-winners-showcase' ),
+			'add_new_item'       => __( 'افزودن برنده جدید', 'festival-winners-showcase' ),
+			'new_item'           => __( 'برنده جدید', 'festival-winners-showcase' ),
+			'edit_item'          => __( 'ویرایش برنده', 'festival-winners-showcase' ),
+			'view_item'          => __( 'مشاهده برنده', 'festival-winners-showcase' ),
+			'all_items'          => __( 'همه برندگان', 'festival-winners-showcase' ),
+			'search_items'       => __( 'جستجوی برندگان', 'festival-winners-showcase' ),
+			'not_found'          => __( 'برنده‌ای یافت نشد.', 'festival-winners-showcase' ),
+			'not_found_in_trash' => __( 'برنده‌ای در زباله‌دان یافت نشد.', 'festival-winners-showcase' )
 		);
 
 		$args = array(
@@ -49,17 +49,17 @@ class FWS_Post_Types {
 
 	public static function register_taxonomies() {
 		$labels = array(
-			'name'              => _x( 'Winner Categories', 'taxonomy general name', 'festival-winners-showcase' ),
-			'singular_name'     => _x( 'Winner Category', 'taxonomy singular name', 'festival-winners-showcase' ),
-			'search_items'      => __( 'Search Categories', 'festival-winners-showcase' ),
-			'all_items'         => __( 'All Categories', 'festival-winners-showcase' ),
-			'parent_item'       => __( 'Parent Category', 'festival-winners-showcase' ),
-			'parent_item_colon' => __( 'Parent Category:', 'festival-winners-showcase' ),
-			'edit_item'         => __( 'Edit Category', 'festival-winners-showcase' ),
-			'update_item'       => __( 'Update Category', 'festival-winners-showcase' ),
-			'add_new_item'      => __( 'Add New Category', 'festival-winners-showcase' ),
-			'new_item_name'     => __( 'New Category Name', 'festival-winners-showcase' ),
-			'menu_name'         => __( 'Winner Categories', 'festival-winners-showcase' ),
+			'name'              => _x( 'دسته‌بندی برندگان', 'taxonomy general name', 'festival-winners-showcase' ),
+			'singular_name'     => _x( 'دسته‌بندی برنده', 'taxonomy singular name', 'festival-winners-showcase' ),
+			'search_items'      => __( 'جستجوی دسته‌بندی‌ها', 'festival-winners-showcase' ),
+			'all_items'         => __( 'همه دسته‌بندی‌ها', 'festival-winners-showcase' ),
+			'parent_item'       => __( 'دسته‌بندی مادر', 'festival-winners-showcase' ),
+			'parent_item_colon' => __( 'دسته‌بندی مادر:', 'festival-winners-showcase' ),
+			'edit_item'         => __( 'ویرایش دسته‌بندی', 'festival-winners-showcase' ),
+			'update_item'       => __( 'بروزرسانی دسته‌بندی', 'festival-winners-showcase' ),
+			'add_new_item'      => __( 'افزودن دسته‌بندی جدید', 'festival-winners-showcase' ),
+			'new_item_name'     => __( 'نام دسته‌بندی جدید', 'festival-winners-showcase' ),
+			'menu_name'         => __( 'دسته‌بندی‌ها', 'festival-winners-showcase' ),
 		);
 
 		$args = array(

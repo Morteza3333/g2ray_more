@@ -5,7 +5,6 @@
         init: function() {
             this.initGrid();
             this.initModal();
-            this.animateEntrance();
         },
 
         initGrid: function() {
@@ -16,7 +15,8 @@
                 rowHeight: 300,
                 margins: 15,
                 lastRow: 'nojustify',
-                captions: false
+                captions: false,
+                rtl: true
             }).on('jg.complete', function() {
                 gsap.from('.fws-winner-card', {
                     duration: 0.8,
@@ -40,7 +40,7 @@
 
                 // Populate Modal Data
                 $('#fws-modal-title').text(data.title);
-                $('#fws-modal-rank').text(data.rank + (data.rank == 1 ? 'st' : (data.rank == 2 ? 'nd' : 'rd')) + ' Place');
+                $('#fws-modal-rank').text('نفر ' + data.rank);
                 $('#fws-modal-photographer').text(data.photographer);
                 $('#fws-modal-insta-id').text(data.instagram);
                 $('#fws-modal-insta-link').attr('href', 'https://instagram.com/' + data.instagram);
@@ -78,7 +78,8 @@
                     },
                     keyboard: {
                         enabled: true,
-                    }
+                    },
+                    rtl: true
                 });
 
                 // GSAP Modal Entrance
@@ -94,10 +95,6 @@
                     $('body').removeClass('fws-modal-open');
                 }
             });
-        },
-
-        animateEntrance: function() {
-            // Handled in jg.complete callback for better timing
         }
     };
 

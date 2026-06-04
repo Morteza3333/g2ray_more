@@ -29,7 +29,7 @@ class FWS_Meta_Boxes {
 	public static function add_meta_boxes() {
 		add_meta_box(
 			'fws_winner_details',
-			__( 'Winner Details', 'festival-winners-showcase' ),
+			__( 'اطلاعات برنده جشنواره', 'festival-winners-showcase' ),
 			array( __CLASS__, 'render_details_meta_box' ),
 			'winner_entry',
 			'normal',
@@ -38,7 +38,7 @@ class FWS_Meta_Boxes {
 
 		add_meta_box(
 			'fws_photo_gallery',
-			__( 'Photo Series Gallery', 'festival-winners-showcase' ),
+			__( 'گالری تصاویر (برای مجموعه عکس)', 'festival-winners-showcase' ),
 			array( __CLASS__, 'render_gallery_meta_box' ),
 			'winner_entry',
 			'normal',
@@ -54,22 +54,25 @@ class FWS_Meta_Boxes {
 		$instagram_id = get_post_meta( $post->ID, '_fws_instagram_id', true );
 
 		?>
-		<p>
-			<label for="fws_rank"><?php _e( 'Rank:', 'festival-winners-showcase' ); ?></label><br>
+		<div class="fws-meta-field">
+			<label for="fws_rank"><?php _e( 'رتبه برنده:', 'festival-winners-showcase' ); ?></label>
 			<select name="fws_rank" id="fws_rank" class="widefat">
-				<option value="1" <?php selected( $rank, '1' ); ?>><?php _e( '1st Place', 'festival-winners-showcase' ); ?></option>
-				<option value="2" <?php selected( $rank, '2' ); ?>><?php _e( '2nd Place', 'festival-winners-showcase' ); ?></option>
-				<option value="3" <?php selected( $rank, '3' ); ?>><?php _e( '3rd Place', 'festival-winners-showcase' ); ?></option>
+				<option value="1" <?php selected( $rank, '1' ); ?>><?php _e( 'نفر اول', 'festival-winners-showcase' ); ?></option>
+				<option value="2" <?php selected( $rank, '2' ); ?>><?php _e( 'نفر دوم', 'festival-winners-showcase' ); ?></option>
+				<option value="3" <?php selected( $rank, '3' ); ?>><?php _e( 'نفر سوم', 'festival-winners-showcase' ); ?></option>
 			</select>
-		</p>
-		<p>
-			<label for="fws_photographer_name"><?php _e( 'Photographer Name:', 'festival-winners-showcase' ); ?></label>
+			<p class="description"><?php _e( 'رتبه کسب شده توسط عکاس را انتخاب کنید.', 'festival-winners-showcase' ); ?></p>
+		</div>
+		<div class="fws-meta-field">
+			<label for="fws_photographer_name"><?php _e( 'نام و نام خانوادگی عکاس:', 'festival-winners-showcase' ); ?></label>
 			<input type="text" name="fws_photographer_name" id="fws_photographer_name" value="<?php echo esc_attr( $photographer_name ); ?>" class="widefat">
-		</p>
-		<p>
-			<label for="fws_instagram_id"><?php _e( 'Instagram Username (without @):', 'festival-winners-showcase' ); ?></label>
-			<input type="text" name="fws_instagram_id" id="fws_instagram_id" value="<?php echo esc_attr( $instagram_id ); ?>" class="widefat">
-		</p>
+			<p class="description"><?php _e( 'نام کامل عکاس را وارد کنید.', 'festival-winners-showcase' ); ?></p>
+		</div>
+		<div class="fws-meta-field">
+			<label for="fws_instagram_id"><?php _e( 'آیدی اینستاگرام (بدون @):', 'festival-winners-showcase' ); ?></label>
+			<input type="text" name="fws_instagram_id" id="fws_instagram_id" value="<?php echo esc_attr( $instagram_id ); ?>" class="widefat" placeholder="مثلا: jules_photographer">
+			<p class="description"><?php _e( 'آیدی اینستاگرام جهت لینک دادن به پروفایل عکاس.', 'festival-winners-showcase' ); ?></p>
+		</div>
 		<?php
 	}
 
@@ -79,24 +82,24 @@ class FWS_Meta_Boxes {
 
 		?>
 		<div id="fws-gallery-container">
-			<ul id="fws-gallery-list" style="display: flex; flex-wrap: wrap; list-style: none; padding: 0; margin: 0;">
+			<ul id="fws-gallery-list">
 				<?php
 				foreach ( $gallery_array as $img_id ) {
 					$img_url = wp_get_attachment_image_url( $img_id, 'thumbnail' );
 					if ( $img_url ) {
-						echo '<li data-id="' . esc_attr( $img_id ) . '" style="margin: 5px; position: relative; border: 1px solid #ccc;">';
-						echo '<img src="' . esc_url( $img_url ) . '" style="display: block; width: 100px; height: 100px; object-fit: cover;">';
-						echo '<a href="#" class="fws-remove-image" style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 20px; height: 20px; text-align: center; line-height: 20px; text-decoration: none;">&times;</a>';
+						echo '<li data-id="' . esc_attr( $img_id ) . '">';
+						echo '<img src="' . esc_url( $img_url ) . '">';
+						echo '<a href="#" class="fws-remove-image" title="حذف">&times;</a>';
 						echo '</li>';
 					}
 				}
 				?>
 			</ul>
 			<input type="hidden" name="fws_gallery_ids" id="fws_gallery_ids" value="<?php echo esc_attr( $gallery_ids ); ?>">
-			<p>
-				<button type="button" class="button" id="fws_add_gallery_images"><?php _e( 'Add Images to Series', 'festival-winners-showcase' ); ?></button>
-			</p>
-			<p class="description"><?php _e( 'Use this for "Photo Series" category. For "Single Photo", you can just use the Featured Image.', 'festival-winners-showcase' ); ?></p>
+			<div class="fws-gallery-actions">
+				<button type="button" class="button button-primary" id="fws_add_gallery_images"><?php _e( 'افزودن تصاویر به مجموعه', 'festival-winners-showcase' ); ?></button>
+			</div>
+			<p class="description"><?php _e( 'اگر این مورد یک "مجموعه عکس" است، تصاویر آن را از اینجا اضافه کنید. برای "تک عکس" فقط کافیست "تصویر شاخص" را تنظیم کنید.', 'festival-winners-showcase' ); ?></p>
 		</div>
 		<?php
 	}
