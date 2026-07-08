@@ -101,7 +101,8 @@ async def play(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "answered_users": set(),
         "admin_id": user_id,
         "join_message_id": None,
-        "question_message_id": None
+        "question_message_id": None,
+        "transitioning": False  # New flag to prevent race conditions
     }
 
     keyboard = [
@@ -180,7 +181,7 @@ async def handle_callbacks(update: Update, context: ContextTypes.DEFAULT_TYPE):
         selected_index = int(parts[2])
 
         # Validate this is for the CURRENT question
-        if callback_q_index != game["current_question_index"]:
+        if callback_q_index != game["current_question_index"] or game["transitioning"]:
             await query.answer("This question is no longer active.", show_alert=True)
             return
 
@@ -203,12 +204,6 @@ async def handle_callbacks(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # Check if everyone has answered
         if len(game["answered_users"]) >= len(game["participants"]):
-            # Trigger timeout callback early by removing scheduled job and calling it manually
-            jobs = context.job_queue.get_jobs_by_name(f"timeout_{chat_id}_{game['current_question_index']}")
-            for job in jobs:
-                job.schedule_removal()
-
-            # Manually trigger the next step
             await proceed_to_next(context, chat_id, game["current_question_index"])
 
 # --- Quiz Logic ---
@@ -218,6 +213,7 @@ async def send_next_question(context: ContextTypes.DEFAULT_TYPE, chat_id: int):
         return
 
     game = games[chat_id]
+    game["transitioning"] = False
     index = game["current_question_index"]
 
     if index >= len(game["questions"]):
@@ -295,8 +291,16 @@ async def proceed_to_next(context: CallbackContext, chat_id: int, index: int):
         return
 
     game = games[chat_id]
-    if game["current_question_index"] != index:
+    # Guard against multiple calls for the same question
+    if game["current_question_index"] != index or game["transitioning"]:
         return
+
+    game["transitioning"] = True
+
+    # Cancel any existing timeout jobs for this question
+    jobs = context.job_queue.get_jobs_by_name(f"timeout_{chat_id}_{index}")
+    for job in jobs:
+        job.schedule_removal()
 
     current_q = game["questions"][index]
     correct_text = current_q["options"][current_q["answer"]]
