@@ -1,0 +1,118 @@
+<UserControl x:Class="FinAccApp.Views.PersonalFinanceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             FlowDirection="RightToLeft"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <StackPanel Margin="10">
+            <UniformGrid Columns="4" Rows="2" Margin="0,0,0,20">
+                <Border Style="{DynamicResource GlassCardStyle}" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="مجموع درآمد شخصی" Style="{DynamicResource MutedTextStyle}"/>
+                        <TextBlock x:Name="TxtPersonalIncome" Text="۰ تومان" Style="{DynamicResource TitleTextStyle}" FontSize="18" Foreground="{DynamicResource SuccessBrush}" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{DynamicResource GlassCardStyle}" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="مجموع هزینه‌های شخصی" Style="{DynamicResource MutedTextStyle}"/>
+                        <TextBlock x:Name="TxtPersonalExpense" Text="۰ تومان" Style="{DynamicResource TitleTextStyle}" FontSize="18" Foreground="{DynamicResource DangerBrush}" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{DynamicResource GlassCardStyle}" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="پس‌انداز کل" Style="{DynamicResource MutedTextStyle}"/>
+                        <TextBlock x:Name="TxtSavings" Text="۰ تومان" Style="{DynamicResource TitleTextStyle}" FontSize="18" Foreground="{DynamicResource PrimaryBrush}" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{DynamicResource GlassCardStyle}" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="سرمایه‌گذاری‌ها" Style="{DynamicResource MutedTextStyle}"/>
+                        <TextBlock x:Name="TxtInvestments" Text="۰ تومان" Style="{DynamicResource TitleTextStyle}" FontSize="18" Foreground="{DynamicResource AccentBrush}" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{DynamicResource GlassCardStyle}" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="وام‌ها و بدهی‌ها" Style="{DynamicResource MutedTextStyle}"/>
+                        <TextBlock x:Name="TxtLoans" Text="۰ تومان" Style="{DynamicResource TitleTextStyle}" FontSize="18" Foreground="{DynamicResource DangerBrush}" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{DynamicResource GlassCardStyle}" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="کارت اعتباری" Style="{DynamicResource MutedTextStyle}"/>
+                        <TextBlock x:Name="TxtCreditCard" Text="۰ تومان" Style="{DynamicResource TitleTextStyle}" FontSize="18" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{DynamicResource GlassCardStyle}" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="کیف پول نقدی" Style="{DynamicResource MutedTextStyle}"/>
+                        <TextBlock x:Name="TxtWallet" Text="۰ تومان" Style="{DynamicResource TitleTextStyle}" FontSize="18" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{DynamicResource GlassCardStyle}" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="صندوق پس‌انداز نقدی" Style="{DynamicResource MutedTextStyle}"/>
+                        <TextBlock x:Name="TxtCash" Text="۰ تومان" Style="{DynamicResource TitleTextStyle}" FontSize="18" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <Border Style="{DynamicResource GlassCardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="تراز و موجودی کل دارایی‌های شخصی" Style="{DynamicResource TitleTextStyle}" FontSize="15" Margin="0,0,0,15"/>
+
+                    <StackPanel Grid.Row="1">
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="مجموع پس‌انداز شخصی" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="InpSavings"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,5,0">
+                                <TextBlock Text="کل مبلغ سرمایه‌گذاری‌ها" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="InpInvestments"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="5,0,0,0">
+                                <TextBlock Text="کل اقساط و وام‌های دریافتی" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="InpLoans"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="موجودی کارت اعتباری" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="InpCreditCard"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,5,0">
+                                <TextBlock Text="موجودی کیف پول شخصی" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="InpWallet"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="5,0,0,0">
+                                <TextBlock Text="صندوق پس‌انداز نقد" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="InpCash"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Button Content="ذخیره و بهینه‌سازی ترازنامه دارایی" Click="BtnSave_Click" Style="{StaticResource SuccessButtonStyle}" Height="40" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>
