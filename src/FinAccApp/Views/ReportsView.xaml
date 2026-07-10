@@ -1,0 +1,64 @@
+<UserControl x:Class="FinAccApp.Views.ReportsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             FlowDirection="RightToLeft"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <StackPanel Margin="10">
+            <Border Style="{DynamicResource GlassCardStyle}" Margin="0,0,0,15" Padding="15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="نوع گزارش:" Style="{DynamicResource BodyTextStyle}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <ComboBox x:Name="CboReportType" Width="200" Height="36" SelectionChanged="CboReportType_SelectionChanged">
+                            <ComboBoxItem Content="گزارش درآمدهای استودیو" Tag="Income" IsSelected="True"/>
+                            <ComboBoxItem Content="گزارش هزینه‌های عمومی" Tag="Expense"/>
+                            <ComboBoxItem Content="گزارش سودآوری پروژه‌ها" Tag="Profit"/>
+                            <ComboBoxItem Content="گزارش حساب اقساط" Tag="Installment"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="25,0,0,0">
+                        <TextBlock Text="دوره زمانی:" Style="{DynamicResource BodyTextStyle}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <ComboBox x:Name="CboPeriod" Width="140" Height="36" SelectionChanged="CboPeriod_SelectionChanged">
+                            <ComboBoxItem Content="کل دوره" Tag="All" IsSelected="True"/>
+                            <ComboBoxItem Content="امروز" Tag="Daily"/>
+                            <ComboBoxItem Content="هفته اخیر" Tag="Weekly"/>
+                            <ComboBoxItem Content="ماه اخیر" Tag="Monthly"/>
+                            <ComboBoxItem Content="سال جاری" Tag="Yearly"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Button Content="خروجی اکسل (Excel)" Click="BtnExportExcel_Click" Style="{StaticResource SuccessButtonStyle}" Margin="0,0,8,0" Padding="12,6"/>
+                        <Button Content="خروجی پی‌دی‌اف (PDF)" Click="BtnExportPdf_Click" Style="{StaticResource AccentButtonStyle}" Padding="12,6"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Style="{DynamicResource GlassCardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock x:Name="TxtReportTitle" Text="ریز تراکنش‌های درآمدی استودیو" Style="{DynamicResource TitleTextStyle}" FontSize="16" Margin="0,0,0,15"/>
+
+                    <DataGrid Grid.Row="1" x:Name="DgrReports" AutoGenerateColumns="True" Height="400"
+                              Background="Transparent" BorderThickness="0" RowBackground="Transparent"
+                              AlternatingRowBackground="#05000000" IsReadOnly="True" FlowDirection="RightToLeft"
+                              CanUserAddRows="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{DynamicResource GlassBorderBrush}"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

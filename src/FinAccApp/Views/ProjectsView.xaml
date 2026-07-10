@@ -1,0 +1,210 @@
+<UserControl x:Class="FinAccApp.Views.ProjectsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             FlowDirection="RightToLeft"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.2*"/>
+            <ColumnDefinition Width="1.8*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="1" Style="{DynamicResource GlassCardStyle}" Margin="5" Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="لیست پروژه‌ها" Style="{DynamicResource TitleTextStyle}" FontSize="16" Margin="10,5"/>
+
+                <ListBox Grid.Row="1" x:Name="LstProjects" SelectionChanged="LstProjects_SelectionChanged" Background="Transparent" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="10" Background="{DynamicResource GlassBgBrush}" BorderBrush="{DynamicResource GlassBorderBrush}" BorderThickness="1" Margin="3" Padding="12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" CornerRadius="4" Background="{Binding ProjectColorLabel}" Margin="0,0,8,0"/>
+
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding ProjectTitle}" FontWeight="Bold" Style="{DynamicResource BodyTextStyle}"/>
+                                        <TextBlock Text="{Binding ClientName}" Style="{DynamicResource MutedTextStyle}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding ContractAmount, StringFormat={}{0:N0} تومان}" Style="{DynamicResource BodyTextStyle}" FontWeight="SemiBold" Foreground="{DynamicResource SuccessBrush}"/>
+                                        <TextBlock Text="{Binding Status}" Style="{DynamicResource MutedTextStyle}" HorizontalAlignment="Left"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="0" Style="{DynamicResource GlassCardStyle}" Margin="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,15">
+                        <TextBlock Text="جزئیات و ویرایش پروژه" Style="{DynamicResource TitleTextStyle}" FontSize="16" VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Button Content="جدید" Click="BtnNew_Click" Margin="0,0,5,0" Padding="12,5"/>
+                            <Button Content="ذخیره" Click="BtnSave_Click" Style="{StaticResource SuccessButtonStyle}" Margin="5,0,5,0" Padding="12,5"/>
+                            <Button Content="حذف" Click="BtnDelete_Click" Style="{StaticResource DangerButtonStyle}" Margin="5,0,0,0" Padding="12,5"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Grid.Row="1" x:Name="EditorStack">
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="شناسه پروژه (خودکار)" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtId" IsReadOnly="True" Background="#EEEEEE"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                                <TextBlock Text="عنوان پروژه" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtTitle"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="نام مشتری" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtClientName"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                                <TextBlock Text="شماره تلفن مشتری" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtPhoneNumber"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="نام شرکت / مجموعه" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtCompanyName"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                                <TextBlock Text="دسته‌بندی پروژه" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="CboCategory" Height="36">
+                                    <ComboBoxItem Content="طراحی سایت" IsSelected="True"/>
+                                    <ComboBoxItem Content="دیجیتال مارکتینگ"/>
+                                    <ComboBoxItem Content="سئو و بهینه‌سازی"/>
+                                    <ComboBoxItem Content="تولید محتوا"/>
+                                    <ComboBoxItem Content="سایر"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="مبلغ قرارداد (تومان)" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtContractAmount" TextChanged="CalculateProfit"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,5,0">
+                                <TextBlock Text="هزینه برآوردی پروژه" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtProjectCost" TextChanged="CalculateProfit"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="5,0,0,0">
+                                <TextBlock Text="سود خالص پروژه" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtProfit" IsReadOnly="True" Background="#E8F5E9" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="تاریخ شروع (شمسی - yyyy/MM/dd)" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtStartDate"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                                <TextBlock Text="تاریخ تحویل (شمسی - yyyy/MM/dd)" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtDeliveryDate"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="وضعیت" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="CboStatus" Height="36">
+                                    <ComboBoxItem Content="در حال انجام" IsSelected="True"/>
+                                    <ComboBoxItem Content="پرداخت کامل"/>
+                                    <ComboBoxItem Content="معلق"/>
+                                    <ComboBoxItem Content="لغو شده"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,5,0">
+                                <TextBlock Text="اولویت" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="CboPriority" Height="36">
+                                    <ComboBoxItem Content="کم"/>
+                                    <ComboBoxItem Content="متوسط" IsSelected="True"/>
+                                    <ComboBoxItem Content="بالا"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="5,0,0,0">
+                                <TextBlock Text="برچسب رنگی" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="CboColor" Height="36">
+                                    <ComboBoxItem Content="آبی (طراحی)" Tag="#4A90E2" IsSelected="True"/>
+                                    <ComboBoxItem Content="بنفش (مارکتینگ)" Tag="#9B51E0"/>
+                                    <ComboBoxItem Content="سبز (سئو)" Tag="#2ECC71"/>
+                                    <ComboBoxItem Content="زرد (سایر)" Tag="#F1C40F"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="توضیحات پروژه" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtDescription" Height="60" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,12"/>
+
+                        <TextBlock Text="یادداشت‌های داخلی" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtNotes" Height="60" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,12"/>
+
+                        <TextBlock Text="فایل‌ها و ضمایم پروژه (فایل را به اینجا بکشید)" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                        <Border Height="80" BorderThickness="1.5" BorderBrush="{DynamicResource GlassBorderBrush}" CornerRadius="10" Background="{DynamicResource GlassBgBrush}" AllowDrop="True" Drop="FileBorder_Drop" DragEnter="FileBorder_DragEnter" Margin="0,0,0,10">
+                            <Grid>
+                                <TextBlock x:Name="TxtFileLabel" Text="فایل پیوست یا قرارداد را به این جعبه بکشید..." Style="{DynamicResource MutedTextStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <TextBox x:Name="TxtFiles" IsReadOnly="True" Style="{DynamicResource MutedTextStyle}" Background="#FAFAFA" BorderThickness="0"/>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

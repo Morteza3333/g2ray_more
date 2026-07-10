@@ -1,0 +1,74 @@
+<UserControl x:Class="FinAccApp.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             FlowDirection="RightToLeft"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <StackPanel Margin="10">
+            <Border Style="{DynamicResource GlassCardStyle}" Margin="0,0,0,15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="تنظیمات مشخصات استودیو و واحد مالی" Style="{DynamicResource TitleTextStyle}" FontSize="16" Margin="0,0,0,15"/>
+
+                    <StackPanel Grid.Row="1">
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                <TextBlock Text="نام استودیو / شرکت" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtCompany" Text="استودیو طراحی وب و دیجیتال مارکتینگ شمس"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="5,0,5,0">
+                                <TextBlock Text="واحد پولی جاری" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtCurrency" Text="تومان"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="5,0,0,0">
+                                <TextBlock Text="درصد مالیات پیش‌فرض" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                                <TextBox x:Name="TxtTax" Text="9"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Button Content="ذخیره تنظیمات عمومی" Click="BtnSaveSettings_Click" Style="{StaticResource SuccessButtonStyle}" Height="38"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Style="{DynamicResource GlassCardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="پشتیبان‌گیری و بازیابی پایگاه‌داده محلی (SQLite)" Style="{DynamicResource TitleTextStyle}" FontSize="16" Margin="0,0,0,15"/>
+
+                    <StackPanel Grid.Row="1">
+                        <CheckBox x:Name="ChkAutoBackup" Content="پشتیبان‌گیری خودکار روزانه فعال باشد" IsChecked="True" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="مسیر آخرین فایل پشتیبان ذخیره شده:" Style="{DynamicResource MutedTextStyle}" Margin="0,0,0,5"/>
+                        <TextBox x:Name="TxtBackupPath" IsReadOnly="True" Margin="0,0,0,15" Text="پشتیبان‌گیری خودکار در زمان خروج انجام می‌شود."/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Content="تهیه نسخه پشتیبان دستی هم‌اکنون" Click="BtnBackup_Click" Style="{StaticResource AccentButtonStyle}" Height="40" Margin="0,0,5,0"/>
+                            <Button Grid.Column="1" Content="بازیابی پایگاه‌داده از فایل..." Click="BtnRestore_Click" Style="{StaticResource DangerButtonStyle}" Height="40" Margin="5,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>
