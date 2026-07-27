@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // DOM Cache
   const dom = {
+    appContainer: document.querySelector('.amp-app-container'),
+    mobileBackBtn: document.getElementById('amp-mobile-back-btn'),
     chatsList: document.getElementById('amp-chats-list-container'),
     chatWindow: document.getElementById('amp-chat-window-main'),
     messagesArea: document.getElementById('amp-chat-messages'),
@@ -279,6 +281,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const switchConversation = async (convId) => {
     state.activeConversationId = convId;
     dom.chatWindow.classList.remove('amp-empty');
+
+    if (dom.appContainer) {
+      dom.appContainer.classList.add('amp-mobile-active-chat');
+    }
 
     // Show Chat interfaces
     dom.chatHeader.style.display = 'flex';
@@ -1058,6 +1064,24 @@ document.addEventListener('DOMContentLoaded', function () {
       state.pollingTimer = setInterval(pollForNewData, ampVars.pollingInterval * 4);
     }
   };
+
+  // Mobile Navigation Back Button
+  if (dom.mobileBackBtn) {
+    dom.mobileBackBtn.addEventListener('click', () => {
+      if (dom.appContainer) {
+        dom.appContainer.classList.remove('amp-mobile-active-chat');
+      }
+    });
+  }
+
+  // Register PWA Service Worker for standalone Android app support
+  if ('serviceWorker' in navigator && ampVars.swUrl) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register(ampVars.swUrl)
+        .then(reg => console.log('Admin Messenger Pro PWA Service Worker registered successfully:', reg.scope))
+        .catch(err => console.warn('PWA Service Worker registration failed:', err));
+    });
+  }
 
   // Initial Load Triggering
   loadConversations();

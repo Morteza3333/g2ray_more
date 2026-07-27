@@ -1042,3 +1042,81 @@
   font-size: 11.5px;
   color: #64748b;
 }
+
+/* Mobile Back Button Styles */
+.amp-mobile-back-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--amp-text-secondary);
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+}
+.amp-mobile-back-btn .dashicons {
+  font-size: 20px;
+}
+
+/* Responsive Touch Target and Styles */
+@media screen and (max-width: 768px) {
+  .amp-app-container {
+    margin: 10px 10px 0 0;
+    height: calc(100vh - 80px);
+  }
+
+  .amp-sidebar {
+    width: 100% !important;
+    min-width: 100% !important;
+    display: flex;
+  }
+
+  .amp-chat-window {
+    width: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--amp-dialog-bg);
+    backdrop-filter: blur(25px);
+    z-index: 10;
+    display: none !important;
+  }
+
+  /* Active Chat Mobile override */
+  .amp-mobile-active-chat .amp-chat-window {
+    display: flex !important;
+  }
+  .amp-mobile-active-chat .amp-sidebar {
+    display: none !important;
+  }
+
+  .amp-mobile-back-btn {
+    display: flex !important;
+  }
+
+  /* Larger touch targets for mobile thumbs */
+  .amp-chat-item,
+  .amp-btn-primary,
+  .amp-btn-secondary,
+  .amp-action-btn-primary,
+  .amp-action-btn-secondary {
+    min-height: 44px !important;
+  }
+
+  .amp-chat-footer {
+    padding: 10px;
+    gap: 5px;
+  }
+
+  #amp-message-textarea {
+    font-size: 15px; /* Prevent automatic iOS/Android text zoom issues */
+  }
+
+  .amp-right-panel {
+    display: none !important; /* Hide details sidebar on mobile view to avoid occlusion */
+  }
+}

@@ -20,6 +20,18 @@ class AMP_Admin {
 		add_action( 'admin_menu', [ $this, 'register_admin_pages' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'wp_dashboard_setup', [ $this, 'add_dashboard_widget' ] );
+		add_action( 'admin_head', [ $this, 'add_pwa_headers' ] );
+	}
+
+	public function add_pwa_headers() {
+		$screen = get_current_screen();
+		if ( $screen && strpos( $screen->id, 'admin-messenger-pro' ) !== false ) {
+			echo '<link rel="manifest" href="' . esc_url( AMP_PLUGIN_URL . 'assets/manifest.json' ) . '">';
+			echo '<meta name="apple-mobile-web-app-capable" content="yes">';
+			echo '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">';
+			echo '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">';
+			echo '<link rel="apple-touch-icon" href="' . esc_url( AMP_PLUGIN_URL . 'assets/images/icon-192.png' ) . '">';
+		}
 	}
 
 	/**
@@ -111,6 +123,7 @@ class AMP_Admin {
 			'accentColor'    => isset( $settings['accent_color'] ) ? sanitize_hex_color( $settings['accent_color'] ) : '#6366f1',
 			'themeMode'      => isset( $settings['theme_mode'] ) ? sanitize_text_field( $settings['theme_mode'] ) : 'auto',
 			'maxUploadSize'  => isset( $settings['max_upload_size'] ) ? intval( $settings['max_upload_size'] ) : 10,
+			'swUrl'          => esc_url_raw( plugins_url( 'assets/js/amp-sw.js', dirname( __FILE__ ) ) ),
 		] );
 	}
 
@@ -183,6 +196,9 @@ class AMP_Admin {
 
 					<!-- Chat Main UI Header -->
 					<div class="amp-chat-header" style="display: none;">
+						<button id="amp-mobile-back-btn" class="amp-mobile-back-btn" title="Back to Chats">
+							<span class="dashicons dashicons-arrow-left-alt2"></span>
+						</button>
 						<div class="amp-chat-header-info">
 							<img src="" id="amp-active-avatar" class="amp-active-avatar" alt="Avatar">
 							<div>
