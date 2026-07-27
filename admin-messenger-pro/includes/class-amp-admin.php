@@ -21,11 +21,26 @@ class AMP_Admin {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'wp_dashboard_setup', [ $this, 'add_dashboard_widget' ] );
 		add_action( 'admin_head', [ $this, 'add_pwa_headers' ] );
+		add_action( 'wp_head', [ $this, 'add_pwa_headers' ] );
+		add_shortcode( 'admin_messenger_pro', [ $this, 'render_shortcode' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_frontend_assets' ] );
 	}
 
 	public function add_pwa_headers() {
-		$screen = get_current_screen();
-		if ( $screen && strpos( $screen->id, 'admin-messenger-pro' ) !== false ) {
+		$is_amp_page = false;
+		if ( is_admin() ) {
+			$screen = get_current_screen();
+			if ( $screen && strpos( $screen->id, 'admin-messenger-pro' ) !== false ) {
+				$is_amp_page = true;
+			}
+		} else {
+			global $post;
+			if ( $post && isset( $post->post_content ) && has_shortcode( $post->post_content, 'admin_messenger_pro' ) ) {
+				$is_amp_page = true;
+			}
+		}
+
+		if ( $is_amp_page ) {
 			echo '<link rel="manifest" href="' . esc_url( AMP_PLUGIN_URL . 'assets/manifest.json' ) . '">';
 			echo '<meta name="apple-mobile-web-app-capable" content="yes">';
 			echo '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">';
@@ -109,6 +124,48 @@ class AMP_Admin {
 		);
 
 		// Pass necessary variables to JS environment
+		$settings = get_option( 'amp_settings', [] );
+		$current_user = wp_get_current_user();
+
+		wp_localize_script( 'amp-chat-js', 'ampVars', [
+			'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
+			'restUrl'        => esc_url_raw( rest_url( 'amp/v1' ) ),
+			'nonce'          => wp_create_nonce( 'wp_rest' ),
+			'currentUserId'  => get_current_user_id(),
+			'currentUserName'=> $current_user->display_name,
+			'currentUserAvatar'=> get_avatar_url( get_current_user_id() ),
+			'pollingInterval'=> isset( $settings['polling_interval'] ) ? intval( $settings['polling_interval'] ) : 3000,
+			'accentColor'    => isset( $settings['accent_color'] ) ? sanitize_hex_color( $settings['accent_color'] ) : '#6366f1',
+			'themeMode'      => isset( $settings['theme_mode'] ) ? sanitize_text_field( $settings['theme_mode'] ) : 'auto',
+			'maxUploadSize'  => isset( $settings['max_upload_size'] ) ? intval( $settings['max_upload_size'] ) : 10,
+			'swUrl'          => esc_url_raw( plugins_url( 'assets/js/amp-sw.js', dirname( __FILE__ ) ) ),
+		] );
+	}
+
+	public function enqueue_frontend_assets() {
+		global $post;
+		if ( ! $post || ! isset( $post->post_content ) || ! has_shortcode( $post->post_content, 'admin_messenger_pro' ) ) {
+			return;
+		}
+
+		wp_enqueue_style( 'dashicons' );
+		wp_enqueue_media();
+
+		wp_enqueue_style(
+			'amp-chat-css',
+			AMP_PLUGIN_URL . 'assets/css/amp-chat.css',
+			[],
+			AMP_VERSION
+		);
+
+		wp_enqueue_script(
+			'amp-chat-js',
+			AMP_PLUGIN_URL . 'assets/js/amp-chat.js',
+			[],
+			AMP_VERSION,
+			true
+		);
+
 		$settings = get_option( 'amp_settings', [] );
 		$current_user = wp_get_current_user();
 
@@ -511,5 +568,103 @@ class AMP_Admin {
 			</div>
 		</div>
 		<?php
+	}
+
+	public function render_shortcode() {
+		ob_start();
+
+		$login_error = '';
+
+		// Handle Secure Frontend Sign-on
+		if ( isset( $_POST['amp_frontend_login'] ) && isset( $_POST['amp_login_nonce'] ) ) {
+			if ( wp_verify_nonce( $_POST['amp_login_nonce'], 'amp_frontend_login_action' ) ) {
+				$creds = [
+					'user_login'    => sanitize_user( $_POST['amp_user'] ),
+					'user_password' => $_POST['amp_pass'],
+					'remember'      => true,
+				];
+
+				$user = wp_signon( $creds, false );
+
+				if ( is_wp_error( $user ) ) {
+					$login_error = $user->get_error_message();
+				} else {
+					// Redirect to self to prevent form re-submission on refresh
+					wp_safe_redirect( get_permalink() );
+					exit;
+				}
+			} else {
+				$login_error = 'Security check failed. Please refresh and try again.';
+			}
+		}
+
+		// Main Auth Render logic
+		if ( is_user_logged_in() ) {
+			if ( $this->current_user_can_access() ) {
+				// User is authenticated and authorized -> render the full responsive messenger!
+				echo '<div class="amp-frontend-fullscreen-wrapper">';
+				$this->render_messenger_page();
+				echo '</div>';
+			} else {
+				// Logged in but not allowed role
+				?>
+				<div class="amp-frontend-login-container">
+					<div class="amp-login-glass-box">
+						<div class="amp-login-header">
+							<span class="dashicons dashicons-lock amp-lock-icon"></span>
+							<h2>Access Denied</h2>
+							<p>You do not have the required permissions to access Admin Messenger Pro.</p>
+						</div>
+						<a href="<?php echo esc_url( wp_logout_url( get_permalink() ) ); ?>" class="amp-login-btn" style="text-align: center; text-decoration: none;">Sign out & Switch Account</a>
+					</div>
+				</div>
+				<?php
+			}
+		} else {
+			// Render beautiful Glassmorphic Login Form
+			?>
+			<div class="amp-frontend-login-container">
+				<div class="amp-login-glass-box">
+					<div class="amp-login-header">
+						<span class="dashicons dashicons-format-chat amp-lock-icon"></span>
+						<h2>Admin Messenger Pro</h2>
+						<p>Please enter your credentials to log in to the secure staff messenger.</p>
+					</div>
+
+					<?php if ( ! empty( $login_error ) ) : ?>
+						<div class="amp-login-error">
+							❌ <?php echo esc_html( $login_error ); ?>
+						</div>
+					<?php endif; ?>
+
+					<form method="POST" action="" class="amp-login-form">
+						<?php wp_nonce_field( 'amp_frontend_login_action', 'amp_login_nonce' ); ?>
+
+						<div class="amp-login-field">
+							<label for="amp-user">Username or Email</label>
+							<div class="amp-input-with-icon">
+								<span class="dashicons dashicons-admin-users"></span>
+								<input type="text" id="amp-user" name="amp-user" placeholder="Enter username..." required>
+							</div>
+						</div>
+
+						<div class="amp-login-field" style="margin-top: 15px;">
+							<label for="amp-pass">Password</label>
+							<div class="amp-input-with-icon">
+								<span class="dashicons dashicons-admin-network"></span>
+								<input type="password" id="amp-pass" name="amp-pass" placeholder="Enter password..." required>
+							</div>
+						</div>
+
+						<button type="submit" name="amp_frontend_login" class="amp-login-btn">
+							Secure Sign In
+						</button>
+					</form>
+				</div>
+			</div>
+			<?php
+		}
+
+		return ob_get_clean();
 	}
 }
