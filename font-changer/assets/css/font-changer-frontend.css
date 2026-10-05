@@ -1,0 +1,127 @@
+/* Frontend Font Changer Widget CSS */
+.fc-widget-wrapper {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-family: inherit;
+    direction: rtl;
+    text-align: right;
+    transition: all 0.3s ease;
+    max-width: 100%;
+}
+
+.fc-widget-wrapper:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
+}
+
+.fc-widget-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.fc-widget-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #475569;
+}
+
+.fc-widget-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.fc-select {
+    padding: 4px 10px;
+    font-size: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    background-color: #f8fafc;
+    color: #1e293b;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+    max-width: 160px;
+}
+
+.fc-select:focus, .fc-select:hover {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+}
+
+.fc-size-btn-group {
+    display: inline-flex;
+    background: #f1f5f9;
+    padding: 3px;
+    border-radius: 20px;
+    gap: 2px;
+}
+
+.fc-size-btn {
+    border: none;
+    background: transparent;
+    color: #64748b;
+    padding: 3px 10px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.fc-size-btn:hover {
+    color: #1e293b;
+}
+
+.fc-size-btn.active {
+    background: #3b82f6;
+    color: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.fc-reset-btn {
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.fc-reset-btn:hover {
+    background: #e2e8f0;
+    color: #ef4444;
+    transform: rotate(-45deg);
+}
+
+/* Responsive adjust */
+@media (max-width: 600px) {
+    .fc-widget-wrapper {
+        border-radius: 16px;
+        padding: 8px 12px;
+    }
+    .fc-widget-body {
+        gap: 8px;
+    }
+    .fc-select {
+        max-width: 120px;
+    }
+}
